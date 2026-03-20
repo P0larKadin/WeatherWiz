@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+struct WeatherData{
+    static let temperatures: Double = 30.0
+    static let conditions: [String] = ["Sunny", "Rainy", "Cloudy", "Snowy"]
+    static let cities: [String] = ["Kelowna", "Vancouver", "Toronto", "Calgary"]
+}
