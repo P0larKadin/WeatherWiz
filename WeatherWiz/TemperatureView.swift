@@ -9,22 +9,23 @@ import SwiftUI
 
 struct TemperatureView: View {
     @State private var isEnabled: Bool = true
+    var bgColor: Color //= Color.blue.opacity(0.1)
+    
+    init(bgColor: Color = Color.blue.opacity(0.1)){
+        self.bgColor = bgColor
+    }
+    
     var body: some View {
         let celsius: Double = WeatherData.temperatures
         VStack{
-            Text("Current Temperature").font(.custom("Arial", size: 30)).bold().padding()
+            Text("Current Temperature").font(.custom("Arial", size: 35)).bold().padding()
             
             HStack{
-                Text(isEnabled ? convertToFahrenheit(cel: celsius).description + " \u{00B0}F" : celsius.description + " \u{00B0}C").font(.custom("Arial", size: 50)).bold().padding(50)
+                Text(isEnabled ? convertToFahrenheit(cel: celsius).description + " \u{00B0}F" : celsius.description + "\u{00B0}C").font(.custom("Arial", size: 50)).bold().frame(width: 175).padding(15)
                 
-                //Form{
-                VStack{
-                    Text(" \u{00B0}C      \u{00B0}F")
-                    Toggle("", isOn: $isEnabled).frame(width: 1)
-                }.padding()
-                //}
+                tempTypeToggleButton()
             }
-        }
+        }.background(bgColor)
     }
     
     func convertToFahrenheit(cel: Double) -> Double {
@@ -34,8 +35,21 @@ struct TemperatureView: View {
     func convertToCelsius(fahrenheit: Double) -> Double {
         return (fahrenheit - 32) * 5/9
     }
+    
+    func tempTypeToggleButton(fontSize: CGFloat = 30, buttonSize: CGFloat = 1.3) -> some View {
+        VStack{
+            HStack{
+                Text("\u{00B0}C").font(.custom("Arial", size: fontSize))
+                Text("  ")//Buffer
+                Text("\u{00B0}F").font(.custom("Arial", size: fontSize))
+            }
+            Toggle("", isOn: $isEnabled).frame(width: 1)
+                .scaleEffect(buttonSize)
+        }.padding()
+    }
 }
 
 #Preview {
-    TemperatureView()
+    TemperatureView(/*bgColor: Color.blue*/)
+    //TemperatureView().tempTypeToggleButton()
 }
