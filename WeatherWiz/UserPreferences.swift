@@ -10,9 +10,9 @@ import SwiftData
 
 /*
  How To Use:
- @Environment(\.modelContext) private var context //Initialize the container
+ @Environment(\.modelContext) var context //Initialize the container
  let userPrefs = UserPreferences(username: "ExampleUser", favCities: [], tempUnit: .celsius ) //Creates the user
- context.insert(prefs) //INSERT;
+ context.insert(userPrefs) //INSERT;
  try? context.save() //COMMIT;
  
  @Query(sort: [], predicate: #Predicate<UserPreferences> {$0.username == "ExampleUsername"}) //SELECT * FROM UserPreferences WHERE username = 'ExampleUsername'

@@ -11,6 +11,8 @@ struct TemperatureView: View {
     @State private var isEnabled: Bool = true
     var bgColor: Color //= Color.blue.opacity(0.1)
     
+    let degreeSymbol: String = "\u{00B0}"
+    
     init(bgColor: Color = Color.blue.opacity(0.1)){
         self.bgColor = bgColor
     }
@@ -21,7 +23,7 @@ struct TemperatureView: View {
             Text("Current Temperature").font(.custom("Arial", size: 35)).bold().padding()
             
             HStack{
-                Text(isEnabled ? convertToFahrenheit(cel: celsius).description + " \u{00B0}F" : celsius.description + "\u{00B0}C").font(.custom("Arial", size: 50)).bold().frame(width: 175).padding(15)
+                Text(isEnabled ? convertToFahrenheit(cel: celsius).description + " \(degreeSymbol)F" : celsius.description + " \(degreeSymbol)C").font(.custom("Arial", size: 50)).bold().frame(width: 175).padding(15)
                 
                 tempTypeToggleButton()
             }
@@ -39,9 +41,9 @@ struct TemperatureView: View {
     func tempTypeToggleButton(fontSize: CGFloat = 30, buttonSize: CGFloat = 1.3) -> some View {
         VStack{
             HStack{
-                Text("\u{00B0}C").font(.custom("Arial", size: fontSize))
+                Text("\(degreeSymbol)C").font(.custom("Arial", size: fontSize))
                 Text("  ")//Buffer
-                Text("\u{00B0}F").font(.custom("Arial", size: fontSize))
+                Text("\(degreeSymbol)F").font(.custom("Arial", size: fontSize))
             }
             Toggle("", isOn: $isEnabled).frame(width: 1)
                 .scaleEffect(buttonSize)
