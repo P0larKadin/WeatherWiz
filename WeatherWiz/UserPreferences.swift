@@ -8,21 +8,6 @@
 import Foundation
 import SwiftData
 
-/*
- How To Use:
- @Environment(\.modelContext) var context //Initialize the container
- let userPrefs = UserPreferences(username: "ExampleUser", favCities: [], tempUnit: .celsius ) //Creates the user
- context.insert(userPrefs) //INSERT;
- try? context.save() //COMMIT;
- 
- @Query(sort: [], predicate: #Predicate<UserPreferences> {$0.username == "ExampleUsername"}) //SELECT * FROM UserPreferences WHERE username = 'ExampleUsername'
- var returnedRows: [UserPreferences] //holds the query results in an array
- 
- let myPrefs = returnedRows.first //Should only be one row in the array in this case, put it in a UserPreferences variable
- myPrefs.addFavoriteCity("Kelowna") //Can now use the UserPreferences variable
- //Text("Hello \(myPrefs.username), here is today's weather...")
- */
-
 
 @Model
 class UserPreferences {
@@ -30,7 +15,7 @@ class UserPreferences {
     var favCities: [String]
     var tempUnit: TemperatureUnit
     
-    init(username: String, favCities: [String] = [], tempUnit: TemperatureUnit = .celsius){
+    init(username: String = "ExampleUsername", favCities: [String] = [], tempUnit: TemperatureUnit = .celsius){
         self.username = username
         self.favCities = favCities
         self.tempUnit = tempUnit
