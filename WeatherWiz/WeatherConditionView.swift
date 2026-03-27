@@ -26,7 +26,7 @@ struct WeatherConditionView: View {
             }
         }()
 
-        //change emoji based on condition
+        // change emoji based on condition
         let emoji: String = {
             switch condition {
             case "Sunny":
@@ -44,9 +44,13 @@ struct WeatherConditionView: View {
 
         VStack {
             Text("Today's Weather is:")
+                .padding()
             Text(emoji)
-                .font(.title)
-            Text(condition).font(.largeTitle)
+                .font(.system(size: 100))
+                .minimumScaleFactor(0.5)
+            Text(condition)
+                .font(.largeTitle)
+                .padding()
             Text(weatherMsg)
         }
     }
