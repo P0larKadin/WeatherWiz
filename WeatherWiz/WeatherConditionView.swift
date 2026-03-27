@@ -9,29 +9,46 @@ import SwiftUI
 
 struct WeatherConditionView: View {
     var body: some View {
-        let condition: String = WeatherData.conditions[Int.random(in: 0..<WeatherData.conditions.count)]
-        var msg: String = ""
-        switch condition {
-        case "Sunny":
-            var msg: String = WeatherData.sunnyMsgs[Int.random(in: 0..<WeatherData.cloudyMsgs.count)]
-        case "Rainy":
-            var msg: String = WeatherData.rainyMsgs[Int.random(in: 0..<WeatherData.cloudyMsgs.count)]
-        case "Cloudy":
-            var msg: String = WeatherData.cloudyMsgs[Int.random(in: 0..<WeatherData.cloudyMsgs.count)]
-        case "Snowy":
-            var msg: String = WeatherData.snowyMsgs[Int.random(in: 0..<WeatherData.cloudyMsgs.count)]
-        default:
-            var msg: String = "Wonderful weather we're having"
-        }
-        
+        // Compute condition and message up front
+        let condition: String = WeatherData.conditions.randomElement() ?? "Sunny"
+        let weatherMsg: String = {
+            switch condition {
+            case "Sunny":
+                return WeatherData.sunnyMsgs.randomElement() ?? "Enjoy the sunshine!"
+            case "Rainy":
+                return WeatherData.rainyMsgs.randomElement() ?? "Pack an umbrella!"
+            case "Cloudy":
+                return WeatherData.cloudyMsgs.randomElement() ?? "Stay cozy!"
+            case "Snowy":
+                return WeatherData.snowyMsgs.randomElement() ?? "Bundle up!"
+            default:
+                return "Wonderful weather we're having"
+            }
+        }()
+
+        //change emoji based on condition
+        let emoji: String = {
+            switch condition {
+            case "Sunny":
+                return "☀️"
+            case "Rainy":
+                return "🌧️"
+            case "Cloudy":
+                return "☁️"
+            case "Snowy":
+                return "❄️"
+            default:
+                return "🌤️"
+            }
+        }()
+
         VStack {
-            Text(condition == "Cloudy" ? "🌤️" : "☀️").font(Font.largeTitle)
-            Text("Todays Weather is:")
-            Text("\(condition)")
-            Text("\(msg)").font(Font.largeTitle)
+            Text("Today's Weather is:")
+            Text(emoji)
+                .font(.title)
+            Text(condition).font(.largeTitle)
+            Text(weatherMsg)
         }
-        
-        
     }
 }
 
