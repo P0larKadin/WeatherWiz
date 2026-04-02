@@ -13,7 +13,7 @@ struct WeatherWizApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .modelContainer(for: UserPreferences.self)
+                .modelContainer(for: [UserPreferences.self, City.self])
                 //Syntax for multiple classes as tables in the SQLite DB: .modelContainer(for: [ClassName1.self, ClassName2.self, ..., ClassNameN.self])
         }
     }
