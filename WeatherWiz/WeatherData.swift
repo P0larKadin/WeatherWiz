@@ -6,6 +6,7 @@
 //
 
 import Foundation
+//import OpenMeteoSdk
 
 struct WeatherData{
     static let temperatures: Double = 30.0
