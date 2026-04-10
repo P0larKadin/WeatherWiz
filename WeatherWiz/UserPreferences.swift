@@ -23,6 +23,7 @@ class UserPreferences {
     
     //Allow users to add a city to their favs
     func addFavoriteCity(_ city: String){
+        
         favCities.append(city)
     }
     

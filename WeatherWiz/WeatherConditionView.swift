@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct WeatherConditionView: View {
+    var city: City
     var body: some View {
         // Compute condition and message up front
         let condition: String = WeatherData.conditions.randomElement() ?? "Sunny"
@@ -57,5 +58,5 @@ struct WeatherConditionView: View {
 }
 
 #Preview {
-    WeatherConditionView()
+    //WeatherConditionView()
 }
