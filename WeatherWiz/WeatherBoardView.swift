@@ -13,36 +13,38 @@ struct WeatherBoardView: View {
     
     let columns = [GridItem(.flexible()), GridItem(.flexible())] //Used for the LazyVGrid
     
-    @ViewBuilder
+    //@ViewBuilder
     var body: some View {
-        Title()
-        Divider().padding()
+        
         //var numCities = 5
         
-        ScrollView{
-            LazyVGrid(columns: columns, spacing: 15){
-                ForEach(cities.indices, id: \.self){ index in
-                    Button(action: {
-                        
-                    }){
-                        CityPost(cityName: cities[index])
-                    }
-                    .buttonStyle(PlainButtonStyle())
-                }
-            }
-        }
+        
         
        
         NavigationStack{
-            Text("Search Cities:").padding(.bottom, 25)
-            List{
+            Title()
+            Divider().padding()
+            ScrollView{
+                LazyVGrid(columns: columns, spacing: 15){
+                    ForEach(cities.indices, id: \.self){ index in
+                        
+                        NavigationLink(destination: MainView(cityName1: cities[index])){
+                            CityPost(cityName: cities[index])
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                    }
+                }
+            }
+            //.frame(height: 100)
+            //Text("Search Cities:").padding(.bottom, 25)
+            //List{
                 //ForEach(WeatherData.cities, id: \.self){city in
                     //Text("Search Cities:")
                   //  Text(city)
                 //}
-            }.searchable(text: $search, prompt: "Search Cities:")
-        }.frame(height: 150)
-            .padding(.bottom, 10)
+          //  }//.searchable(text: $search, prompt: "Search Cities:")
+        }//.frame(height: 150)
+            //.padding(.bottom, 10)
     }
 }
 
@@ -79,5 +81,5 @@ struct CityPost: View{
 }
 
 #Preview {
-    WeatherBoardView(cities: ["Kelowna", "Vancouver", "Tokyo", "a", "b", "c"])
+    //WeatherBoardView(cities: ["Kelowna", "Vancouver", "Tokyo", "a", "b", "c"])
 }

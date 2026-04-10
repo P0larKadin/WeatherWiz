@@ -12,7 +12,8 @@ struct ContentView: View {
     @Environment(\.modelContext) private var context //Initialize the container
     
     
-    @Query(filter: #Predicate<UserPreferences> {$0.username == "Kadin"}) //SELECT * FROM UserPreferences WHERE username = 'ExampleUsername'
+    
+    @Query(filter: #Predicate<UserPreferences> {$0.username == "Bailey"}) //SELECT * FROM UserPreferences WHERE username = 'ExampleUsername'
     private var returnedUsers: [UserPreferences] //holds the query results in an array
     
     @Query //SELECT * FROM City
@@ -24,16 +25,15 @@ struct ContentView: View {
         VStack {
             if let row = returnedUsers.first{
                 //Text("Hello \(row.username).")
-                
                 WeatherBoardView(cities: row.favCities)
             }else{
                 //Text("Set up user")
             }
             
             //if let defaultCity = returnedCities.first{
-                
-                //WeatherConditionView(city: defaultCity).padding()
-                //TemperatureView().padding()
+            
+            //WeatherConditionView(city: defaultCity).padding()
+            //TemperatureView().padding()
             //}
         }
         .padding()
@@ -42,7 +42,7 @@ struct ContentView: View {
             addInitialCities()
             // Print this in your AppDelegate or initial View
             print(FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!)
-
+            
         }
     }
     
@@ -79,6 +79,37 @@ struct ContentView: View {
         
         try? context.save() //COMMIT
     }
+}
+
+struct MainView: View{
+    @Environment(\.modelContext) private var context //Initialize the container
+    @State var wdModel =  WeatherDataModel()
+    var cityName1: String
+    
+    //@Query(filter: #Predicate<City> {$0.cityName == "Kelowna"})
+    //var returnedCities1: [City]
+    
+    @State private var fetchedData: [Float]? = nil
+    
+    var body: some View{
+        let temp: Float? = fetchedData?.indices.contains(0) == true ? fetchedData?[0] : nil
+        let code: Float? = fetchedData?.indices.contains(1) == true ? fetchedData?[1] : nil
+        VStack{
+            WeatherConditionView(code: code, city: cityName1).padding()
+            if let temp {
+                TemperatureView(temp: temp).padding()
+            } else {
+                // Optional placeholder while loading
+                ProgressView().padding()
+            }
+        }
+        .task{
+            fetchedData = await wdModel.getWeatherData(cityName: cityName1)
+        }
+        
+    }
+    
+    
 }
 
 #Preview {

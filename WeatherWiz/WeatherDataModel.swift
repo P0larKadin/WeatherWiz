@@ -8,6 +8,7 @@
 
 import SwiftUI
 import OpenMeteoSdk
+import SwiftData
 
 struct WeatherDataModel: View {
     @State private var temperature: Float?
@@ -52,6 +53,7 @@ struct WeatherDataModel: View {
             long = -119.4857
             break
         }
+        
             
         
         let url = URL(string:

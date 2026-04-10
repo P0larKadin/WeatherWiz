@@ -9,16 +9,22 @@ import SwiftUI
 
 struct TemperatureView: View {
     @State private var isEnabled: Bool = true
-    var bgColor: Color //= Color.blue.opacity(0.1)
+    var bgColor: Color = Color.blue.opacity(0.1)
     
     let degreeSymbol: String = "\u{00B0}"
+    let temp: Float
     
-    init(bgColor: Color = Color.blue.opacity(0.1)){
+    init(temp: Float){
+        self.temp = temp
+    }
+    
+    init(temp: Float, bgColor: Color = Color.blue.opacity(0.1)){
         self.bgColor = bgColor
+        self.temp = temp
     }
     
     var body: some View {
-        let celsius: Double = WeatherData.temperatures
+        let celsius: Int = (Int)(temp)//.formatted(.number.precision(.fractionLength(0)))
         VStack{
             Text("Current Temperature").font(.custom("Arial", size: 35)).bold().padding()
             
@@ -30,11 +36,11 @@ struct TemperatureView: View {
         }.background(bgColor)
     }
     
-    func convertToFahrenheit(cel: Double) -> Double {
+    func convertToFahrenheit(cel: Int) -> Int {
         return (cel * 9/5) + 32
     }
     
-    func convertToCelsius(fahrenheit: Double) -> Double {
+    func convertToCelsius(fahrenheit: Int) -> Int {
         return (fahrenheit - 32) * 5/9
     }
     
@@ -52,6 +58,6 @@ struct TemperatureView: View {
 }
 
 #Preview {
-    TemperatureView(/*bgColor: Color.blue*/)
+    //TemperatureView(/*bgColor: Color.blue*/)
     //TemperatureView().tempTypeToggleButton()
 }

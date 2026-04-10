@@ -18,4 +18,5 @@ struct WeatherData{
     static let rainyMsgs: [String] = ["Pack an umbrella!", "It's going to rain!", "temp", "temp"]
     static let cloudyMsgs: [String] = ["temp", "Grey and gloomy :(", "Stay cozy!", "temp"]
     static let snowyMsgs: [String] = ["Bundle up!", "temp", "temp", "Snow day!"]
+    static let thunderMsgs: [String] = ["temp", "temp", "temp", "temp"]
 }
