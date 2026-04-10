@@ -50,6 +50,7 @@
             ReferencedContainer = "container:WeatherWiz.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+<<<<<<< HEAD
       <EnvironmentVariables>
          <EnvironmentVariable
             key = "com.apple.coredata.SQLDebug"
@@ -57,6 +58,8 @@
             isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>
+=======
+>>>>>>> WeatherBoard
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

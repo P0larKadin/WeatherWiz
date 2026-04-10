@@ -23,17 +23,18 @@ struct ContentView: View {
     var body: some View {
         VStack {
             if let row = returnedUsers.first{
-                Text("Hello \(row.username).")
-                WeatherBoard(row.favCities)
+                //Text("Hello \(row.username).")
+                
+                WeatherBoardView(cities: row.favCities)
             }else{
-                Text("Set up user")
+                //Text("Set up user")
             }
             
-            if let defaultCity = returnedCities.first{
+            //if let defaultCity = returnedCities.first{
                 
-                WeatherConditionView(city: defaultCity).padding()
-                TemperatureView().padding()
-            }
+                //WeatherConditionView(city: defaultCity).padding()
+                //TemperatureView().padding()
+            //}
         }
         .padding()
         .onAppear(){
