@@ -6,10 +6,6 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		9A8642B72F7EFB54008F60D9 /* OpenMeteoSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 9A8642B62F7EFB54008F60D9 /* OpenMeteoSdk */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXFileReference section */
 		9A9AB8082F524C1300714C12 /* WeatherWiz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherWiz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -27,7 +23,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9A8642B72F7EFB54008F60D9 /* OpenMeteoSdk in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,7 +65,6 @@
 			);
 			name = WeatherWiz;
 			packageProductDependencies = (
-				9A8642B62F7EFB54008F60D9 /* OpenMeteoSdk */,
 			);
 			productName = WeatherWiz;
 			productReference = 9A9AB8082F524C1300714C12 /* WeatherWiz.app */;
@@ -100,9 +94,6 @@
 			);
 			mainGroup = 9A9AB7FF2F524C1300714C12;
 			minimizedProjectReferenceProxies = 1;
-			packageReferences = (
-				9A8642B52F7EFB54008F60D9 /* XCRemoteSwiftPackageReference "sdk" */,
-			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 9A9AB8092F524C1300714C12 /* Products */;
 			projectDirPath = "";
@@ -337,25 +328,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		9A8642B52F7EFB54008F60D9 /* XCRemoteSwiftPackageReference "sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/open-meteo/sdk.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		9A8642B62F7EFB54008F60D9 /* OpenMeteoSdk */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 9A8642B52F7EFB54008F60D9 /* XCRemoteSwiftPackageReference "sdk" */;
-			productName = OpenMeteoSdk;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 9A9AB8002F524C1300714C12 /* Project object */;
 }
