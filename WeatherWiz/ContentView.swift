@@ -7,115 +7,81 @@
 
 import SwiftUI
 import SwiftData
-//import Foundation
+
 struct ContentView: View {
-    @Environment(\.modelContext) private var context //Initialize the container
-    
-    
-    
-    @Query(filter: #Predicate<UserPreferences> {$0.username == "Bailey"}) //SELECT * FROM UserPreferences WHERE username = 'ExampleUsername'
-    private var returnedUsers: [UserPreferences] //holds the query results in an array
-    
-    @Query //SELECT * FROM City
-    private var returnedCities: [City] //holds the query results in an array
-    
-    //@State public var curCity: City?
-    
+    @Environment(\.modelContext) private var context
+
+    @Query
+    private var returnedCities: [City]
+
+    // Tracks who is logged in. nil = show login screen.
+    @State private var loggedInUser: UserPreferences? = nil
+
     var body: some View {
         VStack {
-            if let row = returnedUsers.first{
-                //Text("Hello \(row.username).")
-                WeatherBoardView(cities: row.favCities)
-            }else{
-                //Text("Set up user")
+            if let user = loggedInUser {
+                // ✅ Logged in — show their weather board
+                WeatherBoardView(cities: user.favCities)
+            } else {
+                // 🔒 Not logged in — show login screen
+                LoginView(loggedInUser: $loggedInUser)
             }
-            
-            //if let defaultCity = returnedCities.first{
-            
-            //WeatherConditionView(city: defaultCity).padding()
-            //TemperatureView().padding()
-            //}
         }
         .padding()
-        .onAppear(){
-            createUserIfNeeded()
+        .onAppear() {
+            createUsersIfNeeded()
             addInitialCities()
-            // Print this in your AppDelegate or initial View
             print(FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!)
-            
         }
     }
-    
-    private func listFavoriteCities(_ cities: [String]){
-        
+
+    private func createUsersIfNeeded() {
+        // Manually fetch since we removed the @Query predicate
+        let descriptor = FetchDescriptor<UserPreferences>()
+        let existing = (try? context.fetch(descriptor)) ?? []
+        guard existing.isEmpty else { return }
+
+        context.insert(UserPreferences(username: "ExampleUsername", favCities: [],                               tempUnit: .celsius))
+        context.insert(UserPreferences(username: "Kadin",           favCities: ["Vancouver", "Tokyo", "Kelowna"], tempUnit: .celsius))
+        context.insert(UserPreferences(username: "Bailey",          favCities: ["Kelowna", "London"],             tempUnit: .celsius))
+        try? context.save()
     }
-    
-    private func createUserIfNeeded(){
-       guard returnedUsers.isEmpty else{
-           
-            return
-        }
-           
-        let userPrefs = UserPreferences(username: "ExampleUsername", favCities: [], tempUnit: .celsius )
-        let kadin = UserPreferences(username: "Kadin", favCities: ["Vanouver", "Tokyo", "Kelowna"], tempUnit: .celsius )
-        let bailey = UserPreferences(username: "Bailey", favCities: ["Kelowna", "London"], tempUnit: .celsius )
-        context.insert(userPrefs) //INSERT
-        context.insert(kadin)
-        context.insert(bailey)
-        try? context.save() //COMMIT
-    }
-    
-    private func addInitialCities(){
-        guard returnedCities.isEmpty else{
-            return
-        }
-        
-        let kelowna = City(cityName: "Kelowna", stateName: "BC", countryName: "Canada", latitude: 49.8863, longitude: -119.4966)
-        context.insert(kelowna)
+
+    private func addInitialCities() {
+        guard returnedCities.isEmpty else { return }
+
+        context.insert(City(cityName: "Kelowna",  stateName: "BC", countryName: "Canada", latitude: 49.8863, longitude: -119.4966))
         context.insert(City(cityName: "Vancouver", stateName: "BC", countryName: "Canada", latitude: 49.2827, longitude: -123.1207))
-        context.insert(City(cityName: "London", countryName: "London", latitude: 51.5072, longitude: -0.1276, timeDifference: 8))
-        context.insert(City(cityName: "Tokyo", countryName: "Japan", latitude: 35.6764, longitude: 139.6500, timeDifference: 8))
-        //context.insert(City(cityName: "London", countryName: "London", latitude: 51.5072, longitude: -0.1276, timeDifference: 8))
-        
-        try? context.save() //COMMIT
+        context.insert(City(cityName: "London",                     countryName: "London", latitude: 51.5072, longitude: -0.1276,   timeDifference: 8))
+        context.insert(City(cityName: "Tokyo",                      countryName: "Japan",  latitude: 35.6764, longitude: 139.6500,  timeDifference: 8))
+        try? context.save()
     }
 }
 
-struct MainView: View{
-    @Environment(\.modelContext) private var context //Initialize the container
-    @State var wdModel =  WeatherDataModel()
+struct MainView: View {
+    @Environment(\.modelContext) private var context
+    @State var wdModel = WeatherDataModel()
     var cityName1: String
-    
-    //@Query(filter: #Predicate<City> {$0.cityName == "Kelowna"})
-    //var returnedCities1: [City]
-    
+
     @State private var fetchedData: [Float]? = nil
-    
-    var body: some View{
+
+    var body: some View {
         let temp: Float? = fetchedData?.indices.contains(0) == true ? fetchedData?[0] : nil
         let code: Float? = fetchedData?.indices.contains(1) == true ? fetchedData?[1] : nil
-        VStack{
+        VStack {
             WeatherConditionView(code: code, city: cityName1).padding()
             if let temp {
                 TemperatureView(temp: temp).padding()
             } else {
-                // Optional placeholder while loading
                 ProgressView().padding()
             }
         }
-        .task{
+        .task {
             fetchedData = await wdModel.getWeatherData(cityName: cityName1)
         }
-        
     }
-    
-    
 }
 
 #Preview {
     ContentView()
 }
-
-
-
-//Test

@@ -15,11 +15,11 @@ class UserPreferences {
     var favCities: [String]
     var tempUnit: TemperatureUnit
     
-    init(username: String = "ExampleUsername", favCities: [String] = [], tempUnit: TemperatureUnit = .celsius){
-        self.username = username
-        self.favCities = favCities
-        self.tempUnit = tempUnit
-    }
+    init(username: String, favCities: [String], tempUnit: TemperatureUnit) {
+            self.username = username
+            self.favCities = favCities
+            self.tempUnit = tempUnit
+        }
     
     //Allow users to add a city to their favs
     func addFavoriteCity(_ city: String){
