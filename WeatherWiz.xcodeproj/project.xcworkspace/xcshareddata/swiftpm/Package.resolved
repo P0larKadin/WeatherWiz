@@ -1,22 +1,22 @@
 {
-  "originHash" : "66ad70d0f92d670124776086cd23873758152eb74320783392566cffc1999351",
+  "originHash" : "dd11834586e321126a33370ed6e10d6cf46a88e8b9b37a05f4c9be3d9246beab",
   "pins" : [
     {
-      "identity" : "flatbuffers",
+      "identity" : "open-meteo",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/google/flatbuffers.git",
+      "location" : "https://github.com/open-meteo/open-meteo",
       "state" : {
-        "revision" : "187240970746d00bbd26b0f5873ed54d2477f9f3",
-        "version" : "25.9.23"
+        "revision" : "a2034f8b45f53d3b8e1b85784716d0a4c62ff1d8",
+        "version" : "1.5.1"
       }
     },
     {
-      "identity" : "sdk",
+      "identity" : "openmeteoswift",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/open-meteo/sdk.git",
+      "location" : "https://github.com/LeoSM-07/OpenMeteoSwift",
       "state" : {
-        "revision" : "a29c4b62dd8445128e6db30f0a6fb5509fa1259c",
-        "version" : "1.26.0"
+        "branch" : "main",
+        "revision" : "68eee92b6ec5ef4b5b03879d38e74d054877300b"
       }
     }
   ],

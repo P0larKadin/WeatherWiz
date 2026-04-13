@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9A8642B72F7EFB54008F60D9 /* OpenMeteoSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 9A8642B62F7EFB54008F60D9 /* OpenMeteoSdk */; };
+		5E6CB1062F8D9FC500E260BE /* OpenMeteoSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 5E6CB1052F8D9FC500E260BE /* OpenMeteoSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,7 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9A8642B72F7EFB54008F60D9 /* OpenMeteoSdk in Frameworks */,
+				5E6CB1062F8D9FC500E260BE /* OpenMeteoSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,7 +70,7 @@
 			);
 			name = WeatherWiz;
 			packageProductDependencies = (
-				9A8642B62F7EFB54008F60D9 /* OpenMeteoSdk */,
+				5E6CB1052F8D9FC500E260BE /* OpenMeteoSwift */,
 			);
 			productName = WeatherWiz;
 			productReference = 9A9AB8082F524C1300714C12 /* WeatherWiz.app */;
@@ -101,7 +101,8 @@
 			mainGroup = 9A9AB7FF2F524C1300714C12;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				9A8642B52F7EFB54008F60D9 /* XCRemoteSwiftPackageReference "sdk" */,
+				5E6CB1042F8D9FC500E260BE /* XCRemoteSwiftPackageReference "OpenMeteoSwift" */,
+				5E6CB1072F8DA04F00E260BE /* XCRemoteSwiftPackageReference "open-meteo" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 9A9AB8092F524C1300714C12 /* Products */;
@@ -339,21 +340,29 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		9A8642B52F7EFB54008F60D9 /* XCRemoteSwiftPackageReference "sdk" */ = {
+		5E6CB1042F8D9FC500E260BE /* XCRemoteSwiftPackageReference "OpenMeteoSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/open-meteo/sdk.git";
+			repositoryURL = "https://github.com/LeoSM-07/OpenMeteoSwift";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		5E6CB1072F8DA04F00E260BE /* XCRemoteSwiftPackageReference "open-meteo" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/open-meteo/open-meteo";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				minimumVersion = 1.5.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		9A8642B62F7EFB54008F60D9 /* OpenMeteoSdk */ = {
+		5E6CB1052F8D9FC500E260BE /* OpenMeteoSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 9A8642B52F7EFB54008F60D9 /* XCRemoteSwiftPackageReference "sdk" */;
-			productName = OpenMeteoSdk;
+			package = 5E6CB1042F8D9FC500E260BE /* XCRemoteSwiftPackageReference "OpenMeteoSwift" */;
+			productName = OpenMeteoSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
