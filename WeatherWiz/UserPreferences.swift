@@ -12,8 +12,16 @@ import SwiftData
 @Model
 class UserPreferences {
     @Attribute(.unique) var username: String
+    var password: String?
     var favCities: [String]
     var tempUnit: TemperatureUnit
+    
+    init(username: String = "ExampleUsername", password: String, favCities: [String] = [], tempUnit: TemperatureUnit = .celsius){
+        self.username = username
+        self.favCities = favCities
+        self.tempUnit = tempUnit
+        self.password = password
+    }
     
     init(username: String = "ExampleUsername", favCities: [String] = [], tempUnit: TemperatureUnit = .celsius){
         self.username = username
