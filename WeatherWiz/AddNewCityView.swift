@@ -101,5 +101,5 @@ struct AddNewCityView: View {
 }
 
 #Preview(){
-    //AddNewCityView()
+    AddNewCityView(user: UserPreferences())
 }
