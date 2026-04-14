@@ -150,6 +150,12 @@ struct MainView: View {
             } else {
                 ProgressView().padding()
             }
+            HStack{
+                Forecast(mode: .daily, tempUnit: "celcius", city: city)
+                
+                Forecast(mode: .weekly, tempUnit: "celcius", city: city)
+            }
+            
             // Example embedding of WeatherDataModel if you want to show its UI:
             // WeatherDataModel(city: city)
         }

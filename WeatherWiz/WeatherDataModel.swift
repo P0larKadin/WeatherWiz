@@ -9,44 +9,20 @@ import SwiftUI
 import OpenMeteoSdk
 import SwiftData
 
-struct WeatherDataModel: View {
-    @State private var temperature: Float?
-    @State private var weatherCode: Float?
+@Observable
+final class WeatherDataModel {
+    private var temperature: Float?
+    private var weatherCode: Float?
 
-    var body: some View {
-        Text(temperature != nil ? "\(temperature!)°C" : "Loading...")
-            .task {
-                await temperature = getWeatherData(cityName: "London").first
-            }
-        Text(weatherCode != nil ? "\(weatherCode!)" : "Loading...")
-            .task {
-                await weatherCode = getWeatherData(cityName: "London").last
-            }
-    }
     
-    func getWeatherDataFull(cityName: String = "", difference: Int = 0) async -> [[Float32]] {
+    
+    func getWeatherDataFull(city: City, difference: Int = 0) async -> [[Float32]] {
         var hour = Calendar.current.component(.hour, from: Date())
         hour = hour + difference
         
-        let lat: Double
-        let long: Double
-        let timezone: String = "America%2FLos_Angeles"
-        
-        switch cityName {
-        case "Kelowna":
-            lat = 49.8831
-            long = -119.4857
-        case "Vancouver":
-            lat = 49.2827
-            long = -123.1207
-        case "London":
-            lat = 51.5074
-            long = -0.1278
-            hour = hour + 8
-        default:
-            lat = 49.8831
-            long = -119.4857
-        }
+        let lat: Double = city.latitude
+        let long: Double = city.longitude
+        let timezone: String = "auto"
         
         let url = URL(string:
             "https://api.open-meteo.com/v1/forecast?latitude=\(lat)&longitude=\(long)&daily=temperature_2m_mean,weather_code&hourly=temperature_2m,weather_code&timezone=\(timezone)&format=flatbuffers"
@@ -77,7 +53,7 @@ struct WeatherDataModel: View {
         return data
     }
 
-    func getWeatherData(cityName: String = "", difference: Int = 0) async -> [Float]{
+    func getWeatherData(city: City, difference: Int = 0) async -> [Float]{
         var data : [Float] = [0,0]
         var hour = Calendar.current.component(.hour, from: Date())
         hour = hour + difference

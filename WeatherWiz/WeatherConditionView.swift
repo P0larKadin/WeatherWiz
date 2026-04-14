@@ -34,7 +34,7 @@ struct WeatherConditionView: View {
         }
     }
     
-    static func getWeatherCondition(code: Float) -> String {
+    static func getWeatherCondition(code: Int) -> String {
         switch code {
         case 0: // Sunny
             return "Sunny"

@@ -40,7 +40,7 @@ enum ForcastMode{
 struct Forecast: View {
     let mode: ForcastMode
     let tempUnit: String
-    let city: String
+    let city: City
     
     @State private var hourlyTemperatures: [Float]?
     @State private var hourlyWeatherCodes: [Float]?
@@ -52,7 +52,7 @@ struct Forecast: View {
     private var model = WeatherDataModel()
     
     // Explicit initializer to avoid private memberwise init
-    init(mode: ForcastMode, tempUnit: String, city: String) {
+    init(mode: ForcastMode, tempUnit: String, city: City) {
         self.mode = mode
         self.tempUnit = tempUnit
         self.city = city
@@ -64,11 +64,11 @@ struct Forecast: View {
         switch mode {
         case .daily:
             guard let codes = hourlyWeatherCodes, hour >= 0, hour < codes.count else { return "⏳" }
-            let condition = WeatherConditionView.getWeatherCondition(code: codes[hour])
+            let condition = WeatherConditionView.getWeatherCondition(code: Int(codes[hour]))
             return WeatherConditionView.getWeatherEmoji(condition: condition)
         case .weekly:
             guard let codes = dailyWeatherCodes, hour >= 0, hour < codes.count else { return "⏳" }
-            let condition = WeatherConditionView.getWeatherCondition(code: codes[hour])
+            let condition = WeatherConditionView.getWeatherCondition(code: Int(codes[hour]))
             return WeatherConditionView.getWeatherEmoji(condition: condition)
         }
     }
@@ -161,7 +161,7 @@ struct Forecast: View {
     
     private func loadData() async {
         isLoading = true
-        let data = await model.getWeatherDataFull(cityName: city)
+        let data = await model.getWeatherDataFull(city: city)
         // Defensive indexing
         if data.indices.contains(0) { hourlyTemperatures = data[0] }
         if data.indices.contains(1) { hourlyWeatherCodes = data[1] }
@@ -173,6 +173,6 @@ struct Forecast: View {
 }
 
 #Preview {
-    Forecast(mode: .daily, tempUnit: "celcius", city: "London")
-    Forecast(mode: .weekly, tempUnit: "fahrenheit", city: "Kelowna")
+    //Forecast(mode: .daily, tempUnit: "celcius", city: "London")
+    //Forecast(mode: .weekly, tempUnit: "fahrenheit", city: "Kelowna")
 }
