@@ -14,27 +14,47 @@ struct WeatherConditionView: View {
     
 
    // @State private var fetchedData: [Float]? = nil
+    
+    static func getWeatherEmoji(condition: String) -> String {
+        switch condition {
+        case "Sunny":
+            return "☀️"
+        case "Rainy":
+            return "🌧️"
+        case "Cloudy":
+            return "☁️"
+        case "Snowy":
+            return "❄️"
+        case "Thunderstorm":
+            return "🌩️"
+        case "Loading":
+            return "⏳"
+        default:
+            return "🌤️"
+        }
+    }
+    
+    static func getWeatherCondition(code: Float) -> String {
+        switch code {
+        case 0: // Sunny
+            return "Sunny"
+        case 51...67, 80...82: // Rainy
+            return "Rainy"
+        case 1...48: // Cloudy
+            return "Cloudy"
+        case 71...77, 85, 86: // Snowy
+            return "Snowy"
+        case 95...99: // Thunderstorm
+            return "Thunderstorm"
+        default: // Other
+            return "Sunny"
+        }
+    }
 
     var body: some View {
-        // Safely unwrap data and compute condition/message/emoji
-        //let code: Float? = fetchedData?.indices.contains(1) == true ? fetchedData?[1] : nil
-
         let condition: String = {
             guard let code else { return "Loading" }
-            switch code {
-            case 0: // Sunny
-                return "Sunny"
-            case 51...67, 80...82: // Rainy
-                return "Rainy"
-            case 1...48: // Cloudy
-                return "Cloudy"
-            case 71...77, 85, 86: // Snowy
-                return "Snowy"
-            case 95...99: // Thunderstorm
-                return "Thunderstorm"
-            default: // Other
-                return "Sunny"
-            }
+            return WeatherConditionView.getWeatherCondition(code: code)
         }()
 
         let weatherMsg: String = {
@@ -56,24 +76,7 @@ struct WeatherConditionView: View {
             }
         }()
 
-        let emoji: String = {
-            switch condition {
-            case "Sunny":
-                return "☀️"
-            case "Rainy":
-                return "🌧️"
-            case "Cloudy":
-                return "☁️"
-            case "Snowy":
-                return "❄️"
-            case "Thunderstorm":
-                return "🌩️"
-            case "Loading":
-                return "⏳"
-            default:
-                return "🌤️"
-            }
-        }()
+        let emoji: String = WeatherConditionView.getWeatherEmoji(condition: condition)
 
         VStack {
             Text("Today's Weather is:")
@@ -87,13 +90,12 @@ struct WeatherConditionView: View {
             Text(weatherMsg)
         }
         .task {
-            // Call the async function in an async context
             //fetchedData = await wdModel.getWeatherData(cityName: self.city)
         }
     }
 }
 
 #Preview {
-    //Provide a stub instance if needed when previewing
+    // Provide a stub instance if needed when previewing
     // WeatherConditionView(wdModel: WeatherDataModel(), city: "Kelowna")
 }
