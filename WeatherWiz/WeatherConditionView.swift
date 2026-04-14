@@ -9,8 +9,8 @@ import SwiftUI
 
 struct WeatherConditionView: View {
     //@State var wdModel: WeatherDataModel
-    let code: Float?
-    var city: String
+    let code: Int?
+    var city: City
     
 
    // @State private var fetchedData: [Float]? = nil

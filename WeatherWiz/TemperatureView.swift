@@ -14,10 +14,6 @@ struct TemperatureView: View {
     let degreeSymbol: String = "\u{00B0}"
     let temp: Float
     
-    init(temp: Float){
-        self.temp = temp
-    }
-    
     init(temp: Float, bgColor: Color = Color.blue.opacity(0.1)){
         self.bgColor = bgColor
         self.temp = temp

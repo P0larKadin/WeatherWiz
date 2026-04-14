@@ -82,28 +82,30 @@ struct WeatherDataModel: View {
         var hour = Calendar.current.component(.hour, from: Date())
         hour = hour + difference
         
-        let lat: Double
-        let long: Double
-        let timezone: String = "America%2FLos_Angeles"
+        let lat: Double = city.latitude
+        let long: Double = city.longitude
+        let timezone: String = "auto"
         
-        switch cityName {
-        case "Kelowna":
-            lat = 49.8831
-            long = -119.4857
-            break
-        case "Vancouver":
-            lat = 49.2827
-            long = -123.1207
-        case "London":
-            lat = 51.5074
-            long = -0.1278
-            hour = hour + 8
-            break
-        default:
-            lat = 49.8831
-            long = -119.4857
-            break
-        }
+        
+        //TODO: Change to use the database's values
+//        switch cityName {
+//        case "Kelowna":
+//            lat = 49.8831
+//            long = -119.4857
+//            break
+//        case "Vancouver":
+//            lat = 49.2827
+//            long = -123.1207
+//        case "London":
+//            lat = 51.5074
+//            long = -0.1278
+//            hour = hour + 8
+//            break
+//        default:
+//            lat = 49.8831
+//            long = -119.4857
+//            break
+//        }
         
             
         
@@ -128,8 +130,4 @@ struct WeatherDataModel: View {
         }
         return data
     }
-}
-
-#Preview{
-    WeatherDataModel()
 }
