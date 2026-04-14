@@ -11,8 +11,6 @@ import SwiftData
 struct ContentView: View {
     @Environment(\.modelContext) private var context //Initialize the container
     
-    
-    
     @Query(filter: #Predicate<UserPreferences> {$0.username == "Bailey"}) //SELECT * FROM UserPreferences WHERE username = 'ExampleUsername'
     private var returnedUsers: [UserPreferences] //holds the query results in an array
     
@@ -85,10 +83,7 @@ struct MainView: View{
     @Environment(\.modelContext) private var context //Initialize the container
     @State var wdModel =  WeatherDataModel()
     var cityName1: String
-    
-    //@Query(filter: #Predicate<City> {$0.cityName == "Kelowna"})
-    //var returnedCities1: [City]
-    
+        
     @State private var fetchedData: [Float]? = nil
     
     var body: some View{
