@@ -23,7 +23,7 @@ struct ContentView: View {
     var body: some View {
         VStack {
             if let row = returnedUsers.first {
-                WeatherBoardView(cities: row.favCities)
+                WeatherBoardView(cities: row.favCities, user: row)
             } else {
                 EmptyView()
             }

@@ -9,7 +9,9 @@ import SwiftUI
 
 struct WeatherBoardView: View {
     var cities: [City]
+    var user: UserPreferences
     @State var search: String = ""
+    @State private var showAddCityWindow = false
     
     let columns = [GridItem(.flexible()), GridItem(.flexible())] //Used for the LazyVGrid
     
@@ -32,6 +34,16 @@ struct WeatherBoardView: View {
                         }
                     }
                 }
+            }
+            .toolbar{
+                Button{
+                    showAddCityWindow = true
+                }label: {
+                    Image(systemName: "plus")
+                }
+            }
+            .sheet(isPresented: $showAddCityWindow){
+                AddNewCityView(user: user);
             }
         }
     }
@@ -64,7 +76,7 @@ struct CityPost: View{
         VStack{
             Circle().fill(dotColor).frame(width: 15).padding(.bottom, 25)
             Text("\(cityName),").font(Font.title)
-            Text("BC").font(Font.title)
+            Text(city.countryName).font(Font.title)
             Text("")
             
         }.frame(width: width, height: height).padding(20).background(bgColor).border(Color.black)
