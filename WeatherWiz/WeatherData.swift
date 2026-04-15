@@ -15,8 +15,8 @@ struct WeatherData{
     
     //Custom messages based on weather condition
     static let sunnyMsgs: [String] = ["Enjoy the sunshine!", "Soak in some raysss", "Dress light!", "T-Shirt weather!"]
-    static let rainyMsgs: [String] = ["Pack an umbrella!", "It's going to rain!", "temp", "temp"]
-    static let cloudyMsgs: [String] = ["temp", "Grey and gloomy :(", "Stay cozy!", "temp"]
-    static let snowyMsgs: [String] = ["Bundle up!", "temp", "temp", "Snow day!"]
-    static let thunderMsgs: [String] = ["temp", "temp", "temp", "temp"]
+    static let rainyMsgs: [String] = ["Pack an umbrella!", "It's going to rain!"]
+    static let cloudyMsgs: [String] = ["Grey and gloomy :(", "Stay cozy!"]
+    static let snowyMsgs: [String] = ["Bundle up!", "Snow day!"]
+    static let thunderMsgs: [String] = ["Kaboom!"]
 }

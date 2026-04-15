@@ -79,14 +79,13 @@ struct WeatherConditionView: View {
         let emoji: String = WeatherConditionView.getWeatherEmoji(condition: condition)
 
         VStack {
-            Text("Today's Weather is:")
+            Text("Today's Weather is:").font(Font.title.bold())
                 .padding()
             Text(emoji)
                 .font(.system(size: 100))
                 .minimumScaleFactor(0.5)
             Text(condition)
                 .font(.largeTitle)
-                .padding()
             Text(weatherMsg)
         }
         .task {

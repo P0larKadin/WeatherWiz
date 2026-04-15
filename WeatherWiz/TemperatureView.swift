@@ -22,13 +22,13 @@ struct TemperatureView: View {
     var body: some View {
         let celsius: Int = (Int)(temp)//.formatted(.number.precision(.fractionLength(0)))
         VStack{
-            Text("Current Temperature").font(.custom("Arial", size: 35)).bold().padding()
+            Text("Current Temperature").font(.custom("Arial", size: 35)).bold()
             
             HStack{
-                Text(isEnabled ? convertToFahrenheit(cel: celsius).description + " \(degreeSymbol)F" : celsius.description + " \(degreeSymbol)C").font(.custom("Arial", size: 50)).bold().frame(width: 175).padding(15)
+                Text(isEnabled ? convertToFahrenheit(cel: celsius).description + " \(degreeSymbol)F" : celsius.description + " \(degreeSymbol)C").font(.custom("Arial", size: 60)).bold().frame(width: 175).padding(15)
                 
                 tempTypeToggleButton()
-            }
+            }.padding()
         }.background(bgColor)
     }
     

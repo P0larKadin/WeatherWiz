@@ -34,6 +34,7 @@ struct WeatherBoardView: View {
                         }
                     }
                 }
+                //Image("weatherWizLogo").resizable().frame(width: 300, height: 100)
             }
             .toolbar{
                 Button{

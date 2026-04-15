@@ -42,6 +42,9 @@ struct Forecast: View {
     let tempUnit: String
     let city: City
     
+    //For the arrow button animations
+    let animationDuration: CGFloat = 0.5
+    
     @State private var hourlyTemperatures: [Float]?
     @State private var hourlyWeatherCodes: [Float]?
     @State private var dailyTemperatures: [Float]?
@@ -101,8 +104,10 @@ struct Forecast: View {
     var body: some View {
         HStack {
             Button(action: {
-                // Previous action (e.g., move one hour/day back)
-                hour = max(0, hour - 1)
+                withAnimation(.easeInOut(duration: animationDuration)){
+                    // Previous action (e.g., move one hour/day back)
+                    hour = max(0, hour - 1)
+                }
             }) {
                 Text("<")
                     .font(.largeTitle)
@@ -123,19 +128,21 @@ struct Forecast: View {
             }
             
             Button(action: {
-                // Next action (e.g., move one hour/day forward)
-                switch mode {
-                case .daily:
-                    if let temps = hourlyTemperatures {
-                        hour = min(temps.count - 1, hour + 1)
-                    } else {
-                        hour += 1
-                    }
-                case .weekly:
-                    if let temps = dailyTemperatures {
-                        hour = min(temps.count - 1, hour + 1)
-                    } else {
-                        hour += 1
+                withAnimation(.easeInOut(duration: animationDuration)){
+                    // Next action (e.g., move one hour/day forward)
+                    switch mode {
+                    case .daily:
+                        if let temps = hourlyTemperatures {
+                            hour = min(temps.count - 1, hour + 1)
+                        } else {
+                            hour += 1
+                        }
+                    case .weekly:
+                        if let temps = dailyTemperatures {
+                            hour = min(temps.count - 1, hour + 1)
+                        } else {
+                            hour += 1
+                        }
                     }
                 }
             }) {

@@ -28,7 +28,7 @@ struct ContentView: View {
                 EmptyView()
             }
         }
-        .padding()
+        //.padding()
         .onAppear {
             addInitialCities()
             createUserIfNeeded()
@@ -143,24 +143,54 @@ struct MainView: View {
         
         let temp: Float? = fetchedData?.indices.contains(0) == true ? fetchedData?[0] : nil
         let code: Int? = fetchedData?.indices.contains(1) == true ? Int(fetchedData?[1] ?? 0): nil
-        VStack {
-            WeatherConditionView(code: code, city: city).padding()
-            if let temp {
-                TemperatureView(temp: temp).padding()
-            } else {
-                ProgressView().padding()
-            }
-            HStack{
-                Forecast(mode: .daily, tempUnit: "celcius", city: city)
-                
-                Forecast(mode: .weekly, tempUnit: "celcius", city: city)
-            }
+        
+        ZStack{
+            LinearGradient(colors: background(code: code), startPoint: .top, endPoint: .bottom).ignoresSafeArea()
             
-            // Example embedding of WeatherDataModel if you want to show its UI:
-            // WeatherDataModel(city: city)
-        }
-        .task(id: city.id) {
-            fetchedData = await wdModel.getWeatherData(city: city)//helper.getWeatherData(cityName: city.cityName, city: city)
+            ScrollView{
+                VStack {
+                    Image("weatherWizLogo").resizable().frame(width: 300, height: 100)
+                    WeatherConditionView(code: code, city: city).padding().animation(.easeInOut(duration: 1), value: code)
+                    if let temp {
+                        TemperatureView(temp: temp, bgColor: .black.opacity(0.1)).padding()
+                    } else {
+                        ProgressView().padding()
+                    }
+                    
+                    HStack{
+                        Forecast(mode: .daily, tempUnit: "celcius", city: city)
+                        
+                        Forecast(mode: .weekly, tempUnit: "celcius", city: city)
+                    }.background(.black.opacity(0.1))
+                    
+                    
+                    // Example embedding of WeatherDataModel if you want to show its UI:
+                    // WeatherDataModel(city: city)
+                }
+                .task(id: city.id) {
+                    fetchedData = await wdModel.getWeatherData(city: city)//helper.getWeatherData(cityName: city.cityName, city: city)
+                }
+            }
+        }.navigationBarTitleDisplayMode(.inline)
+         .toolbarBackground(.hidden, for: .navigationBar)
+         .toolbarColorScheme(.dark, for: .navigationBar)
+         .scrollContentBackground(.hidden)
+    }
+    
+    func background(code: Int?) -> [Color]{
+        switch WeatherConditionView.getWeatherCondition(code: code ?? 0) {
+        case "Sunny":
+            return [Color.blue, Color.yellow]
+        case "Rainy":
+            return [Color.gray, Color.blue]
+        case "Cloudy":
+            return [Color.blue, Color.white]
+        case "Thunderstorm":
+            return [Color.gray, Color.yellow]
+        case "Snowy":
+            return [Color.white, Color.gray]
+        default:
+            return [Color.blue, Color.yellow]
         }
     }
 }
