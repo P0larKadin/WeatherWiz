@@ -9,17 +9,15 @@ import SwiftUI
 
 struct WeatherBoardView: View {
     var cities: [City]
-    var user: UserPreferences
+    @Binding var loggedInUser: UserPreferences?
     @State var search: String = ""
     @State private var showAddCityWindow = false
+    @State private var showLoginSheet = false
     
     let columns = [GridItem(.flexible()), GridItem(.flexible())] //Used for the LazyVGrid
     
     //@ViewBuilder
     var body: some View {
-        
-        //var numCities = 5
-       
         NavigationStack{
             VStack{
                 Title()
@@ -37,14 +35,32 @@ struct WeatherBoardView: View {
                 //Image("weatherWizLogo").resizable().frame(width: 300, height: 100)
             }
             .toolbar{
-                Button{
-                    showAddCityWindow = true
-                }label: {
-                    Image(systemName: "plus")
+                ToolbarItem(placement: .navigationBarTrailing){
+                    Button{
+                        showAddCityWindow = true
+                    }label: {
+                        Image(systemName: "plus")
+                    }
+                }
+                ToolbarItem(placement: .navigationBarLeading){
+                    Button{
+                        showLoginSheet = true
+                    }label: {
+                        Image(systemName: "person.crop.circle")
+                    }
                 }
             }
             .sheet(isPresented: $showAddCityWindow){
-                AddNewCityView(user: user);
+                // Safely unwrap the user to pass into AddNewCityView; if nil, present nothing
+                if let user = loggedInUser {
+                    AddNewCityView(user: user)
+                } else {
+                    Text("Please log in to add cities.")
+                        .padding()
+                }
+            }
+            .sheet(isPresented: $showLoginSheet) {
+                LoginView(loggedInUser: $loggedInUser)
             }
         }
     }
@@ -85,5 +101,10 @@ struct CityPost: View{
 }
 
 #Preview {
-    //WeatherBoardView(cities: ["Kelowna", "Vancouver", "Tokyo", "a", "b", "c"])
+    // Example preview with a constant binding
+    WeatherBoardView(
+        cities: [],
+        loggedInUser: .constant(UserPreferences(username: "PreviewUser"))
+    )
 }
+

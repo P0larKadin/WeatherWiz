@@ -17,15 +17,20 @@ struct ContentView: View {
     @Query //SELECT * FROM City
     private var returnedCities: [City] //holds the query results in an array
     
+    // Tracks who is logged in. nil = show login screen.
+    @State private var loggedInUser: UserPreferences? = nil
+    
     // If you intend to bind a current city, keep this binding injected by the parent.
     // For now, make it optional with a default for previews.
     
     var body: some View {
         VStack {
-            if let row = returnedUsers.first {
-                WeatherBoardView(cities: row.favCities, user: row)
+            if let user = loggedInUser {
+                // ✅ Logged in — show their weather board
+                WeatherBoardView(cities: user.favCities, loggedInUser: $loggedInUser)
             } else {
-                EmptyView()
+                // 🔒 Not logged in — show login screen
+                LoginView(loggedInUser: $loggedInUser)
             }
         }
         //.padding()
@@ -58,9 +63,10 @@ struct ContentView: View {
 
         let hasBailey = allUsers.contains { $0.username == "Bailey" }
         let hasKadin = allUsers.contains { $0.username == "Kadin" }
+        let hasFilip = allUsers.contains { $0.username == "Filip" }
 
         // If both users already exist, nothing to do
-        if hasBailey && hasKadin {
+        if hasBailey && hasKadin && hasFilip {
             return
         }
 
@@ -87,6 +93,7 @@ struct ContentView: View {
         // Resolve favorites into actual City objects
         let kadinFavs = resolveCities(by: kadinFavKeys, from: allCities)
         let baileyFavs = resolveCities(by: baileyFavKeys, from: allCities)
+        let filipFavs: [City] = []
 
         // Create users
         if !hasKadin {
@@ -105,6 +112,15 @@ struct ContentView: View {
                 tempUnit: .celsius
             )
             context.insert(bailey)
+        }
+        
+        if !hasFilip {
+            let filip = UserPreferences(
+                username: "Filip",
+                favCities: filipFavs,
+                tempUnit: .celsius
+            )
+            context.insert(filip)
         }
 
         // Commit once at the end
@@ -198,3 +214,4 @@ struct MainView: View {
 #Preview {
     ContentView()
 }
+
